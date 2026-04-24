@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Samten Dolma Hyolmo — Magazine Portfolio Design System
+   Soft olive / sage / cream palette. All colors HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 44 33% 96%;
+    --foreground: 80 12% 16%;
+
+    --card: 44 30% 94%;
+    --card-foreground: 80 12% 16%;
+
+    --popover: 44 33% 97%;
+    --popover-foreground: 80 12% 16%;
+
+    --primary: 82 18% 32%;
+    --primary-foreground: 44 33% 96%;
+
+    --secondary: 70 15% 86%;
+    --secondary-foreground: 82 18% 28%;
+
+    --muted: 50 18% 90%;
+    --muted-foreground: 80 8% 38%;
+
+    --accent: 72 22% 70%;
+    --accent-foreground: 82 25% 18%;
+
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 44 33% 96%;
+
+    --border: 60 12% 84%;
+    --input: 60 12% 84%;
+    --ring: 82 18% 32%;
+
+    --olive: 82 22% 38%;
+    --olive-deep: 82 25% 22%;
+    --olive-light: 75 18% 78%;
+    --cream: 44 40% 94%;
+    --sand: 38 25% 82%;
+
+    --radius: 0.25rem;
+
+    --gradient-warm: linear-gradient(135deg, hsl(44 35% 95%), hsl(60 18% 88%));
+    --gradient-olive: linear-gradient(160deg, hsl(82 22% 38%), hsl(82 25% 22%));
+    --shadow-soft: 0 20px 50px -20px hsl(82 25% 22% / 0.18);
+    --shadow-card: 0 4px 20px -8px hsl(82 25% 22% / 0.15);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern", "liga";
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-serif tracking-tight;
+  }
+
+  /* Image protection */
+  .protected-img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: auto;
+  }
+  .protected-img::after {
+    content: "";
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .animate-fade-in { animation: fadeIn 0.8s ease-out both; }
+  .animate-fade-up { animation: fadeUp 0.9s ease-out both; }
+  .animate-scale-in { animation: scaleIn 0.5s ease-out both; }
+  .animate-zoom-in { animation: zoomIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tilt {
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: center;
+    will-change: transform;
+  }
+  .tilt:hover {
+    transform: perspective(900px) rotateX(2deg) rotateY(-2deg) scale(1.04);
+  }
+
+  .watermark-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 120px,
+      hsl(var(--cream) / 0.08) 120px,
+      hsl(var(--cream) / 0.08) 121px
+    );
+    pointer-events: none;
+  }
+
+  .tab-blurred img,
+  .tab-blurred video,
+  .tab-blurred iframe {
+    filter: blur(18px) saturate(0.7);
+    transition: filter 0.4s ease-out;
+  }
+
+  .no-scroll { overflow: hidden; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
