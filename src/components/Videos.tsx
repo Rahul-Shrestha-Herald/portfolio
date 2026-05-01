@@ -6,9 +6,9 @@ import vid2 from "@/assets/video7.mp4";
 import vid3 from "@/assets/video10.mp4";
 
 export const allVideos = [
-  { title: "Hand Hygiene, Done Right", src: vid1 },
-  { title: "A Day in My Shoes",        src: vid2 },
-  { title: "Coming Home — Hyolmo",     src: vid3 },
+  { src: vid1, url: null },
+  { src: vid2, url: null },
+  { src: vid3, url: null },
 ];
 
 const videos = allVideos.slice(0, 3);
@@ -20,17 +20,17 @@ export const Videos = () => {
 
   const onEnter = (i: number) => {
     const el = previewRefs.current[i];
-    if (el) {
-      el.currentTime = 0;
-      el.play().catch(() => {});
-    }
+    if (el) { el.currentTime = 0; el.play().catch(() => {}); }
   };
   const onLeave = (i: number) => {
     const el = previewRefs.current[i];
-    if (el) {
-      el.pause();
-      el.currentTime = 0;
-    }
+    if (el) { el.pause(); el.currentTime = 0; }
+  };
+
+  const handleClick = (i: number) => {
+    const v = videos[i];
+    if (v.url) window.open(v.url, "_blank", "noopener,noreferrer");
+    else setActive(i);
   };
 
   return (
@@ -42,11 +42,11 @@ export const Videos = () => {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 protected">
+        <div className="grid md:grid-cols-3 gap-6">
           {videos.map((v, i) => (
             <button
               key={i}
-              onClick={() => setActive(i)}
+              onClick={() => handleClick(i)}
               onMouseEnter={() => onEnter(i)}
               onMouseLeave={() => onLeave(i)}
               className="group text-left reveal"
@@ -59,7 +59,7 @@ export const Videos = () => {
                   playsInline
                   preload="metadata"
                   onContextMenu={(e) => e.preventDefault()}
-                  className="protected-img w-full aspect-[4/5] object-cover opacity-90"
+                  className="w-full aspect-[4/5] object-cover opacity-90"
                 />
                 <video
                   ref={(el) => (previewRefs.current[i] = el)}
@@ -82,7 +82,6 @@ export const Videos = () => {
           ))}
         </div>
 
-        {/* See More Button */}
         <div className="flex justify-center mt-16 reveal">
           <button
             onClick={() => navigate("/videos")}
@@ -126,4 +125,3 @@ export const Videos = () => {
     </section>
   );
 };
-

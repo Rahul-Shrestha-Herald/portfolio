@@ -6,34 +6,24 @@ import { useMediaProtection } from "@/hooks/useMediaProtection";
 
 import vid1  from "@/assets/video1.mov";
 import vid2  from "@/assets/video2.mp4";
-import vid3  from "@/assets/video3.mov";
 import vid4  from "@/assets/video4.mov";
-import vid5  from "@/assets/video5.mov";
-import vid6  from "@/assets/video6.mov";
 import vid7  from "@/assets/video7.mp4";
-import vid8  from "@/assets/video8.mp4";
 import vid9  from "@/assets/video9.mp4";
 import vid10 from "@/assets/video10.mp4";
-import vid11 from "@/assets/video11.mp4";
 import vid12 from "@/assets/video12.mp4";
 import vid14 from "@/assets/video14.mp4";
 import vid15 from "@/assets/video15.mp4";
 
 const videos = [
-  { title: "Moonlight",               src: vid1  },
-  { title: "A Day in My Shoes",        src: vid2  },
-  { title: "Coming Home — Hyolmo",    src: vid3  },
-  { title: "Bouddhanath",              src: vid4  },
-  { title: "Chandragiri",              src: vid5  },
-  { title: "Ringu",                    src: vid6  },
-  { title: "Rupesh Dai",               src: vid7  },
-  { title: "Portrait",                 src: vid8  },
-  { title: "Moments",                  src: vid9  },
-  { title: "Quiet Mornings",           src: vid10 },
-  { title: "At Work",                  src: vid11 },
-  { title: "Hand Hygiene, Done Right", src: vid12 },
-  { title: "Memory",                   src: vid14 },
-  { title: "Stillness",                src: vid15 },
+  { src: vid1,  url: null },
+  { src: vid2,  url: null },
+  { src: vid4,  url: null },
+  { src: vid7,  url: null },
+  { src: vid9,  url: null },
+  { src: vid10, url: null },
+  { src: vid12, url: null },
+  { src: vid14, url: null },
+  { src: vid15, url: null },
 ];
 
 const AllVideos = () => {
@@ -55,6 +45,12 @@ const AllVideos = () => {
   const onLeave = (i: number) => {
     const el = previewRefs.current[i];
     if (el) { el.pause(); el.currentTime = 0; }
+  };
+
+  const handleClick = (i: number) => {
+    const v = videos[i];
+    if (v.url) window.open(v.url, "_blank", "noopener,noreferrer");
+    else setActive(i);
   };
 
   return (
@@ -91,39 +87,42 @@ const AllVideos = () => {
           {videos.map((v, i) => (
             <button
               key={i}
-              onClick={() => setActive(i)}
+              onClick={() => handleClick(i)}
               onMouseEnter={() => onEnter(i)}
               onMouseLeave={() => onLeave(i)}
               className="group text-left reveal"
               style={{ transitionDelay: `${(i % 8) * 80}ms` }}
             >
               <div className="relative overflow-hidden bg-olive-deep">
-                <video
-                  src={v.src}
-                  muted
-                  playsInline
-                  preload="metadata"
-                  onContextMenu={(e) => e.preventDefault()}
-                  className="protected-img w-full aspect-[4/5] object-cover opacity-90"
-                />
-                <video
-                  ref={(el) => (previewRefs.current[i] = el)}
-                  src={v.src}
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
-                  onContextMenu={(e) => e.preventDefault()}
-                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                />
+                {v.src ? (
+                  <>
+                    <video
+                      src={v.src}
+                      muted
+                      playsInline
+                      preload="metadata"
+                      onContextMenu={(e) => e.preventDefault()}
+                      className="w-full aspect-[4/5] object-cover opacity-90"
+                    />
+                    <video
+                      ref={(el) => (previewRefs.current[i] = el)}
+                      src={v.src}
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      onContextMenu={(e) => e.preventDefault()}
+                      className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    />
+                  </>
+                ) : (
+                  <div className="w-full aspect-[4/5] bg-olive-deep/60" />
+                )}
                 <div className="absolute inset-0 bg-olive-deep/30 group-hover:bg-olive-deep/15 transition-colors pointer-events-none" />
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="w-12 h-12 rounded-full border border-cream/70 flex items-center justify-center backdrop-blur-sm bg-cream/10 group-hover:scale-110 transition-transform">
                     <Play className="w-4 h-4 text-cream ml-0.5" fill="currentColor" />
                   </div>
-                </div>
-                <div className="absolute top-2 right-2 text-[9px] uppercase tracking-[0.3em] text-cream/60 mix-blend-difference">
-                  © Samten
                 </div>
               </div>
             </button>
@@ -132,7 +131,7 @@ const AllVideos = () => {
       </div>
 
       {/* Lightbox */}
-      {active !== null && (
+      {active !== null && videos[active].src && (
         <div
           className="fixed inset-0 z-50 bg-olive-deep/95 backdrop-blur-md flex items-center justify-center p-6 animate-fade-in"
           onClick={() => setActive(null)}
@@ -164,7 +163,7 @@ const AllVideos = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <video
-              src={videos[active].src}
+              src={videos[active].src!}
               autoPlay
               controls
               controlsList="nodownload noremoteplayback noplaybackrate"

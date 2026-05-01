@@ -18,7 +18,7 @@ export const About = () => {
             </p>
             <div className="space-y-5 text-foreground/75 leading-relaxed max-w-xl">
               <p>
-                When I'm not working, you'll find me in a quiet corner of my room or a cozy café, rewatching my comfort shows like Friends and The Big Bang Theory, or getting lost in the science of the movie Interstellar.
+                When I'm not working, you'll find me in a quiet corner of my room or a cozy café, rewatching my comfort shows like Friends or The Big Bang Theory, or getting lost in the science of the movie "Interstellar" — or simply diving into a good book.
               </p>
             </div>
           </div>

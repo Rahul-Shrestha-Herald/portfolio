@@ -37,6 +37,7 @@ import p41 from "@/assets/photo41.jpg";
 import p42 from "@/assets/photo42.jpg";
 import p43 from "@/assets/photo43.webp";
 import p44 from "@/assets/photo44.png";
+import p45 from "@/assets/photo45.jpg";
 import bouddha     from "@/assets/bouddha.jpeg";
 import chandragiri from "@/assets/chandragiri.jpeg";
 import moon        from "@/assets/moon.jpeg";
@@ -79,6 +80,7 @@ const photos = [
   { src: p42,         alt: "Photo",           caption: "Joy" },
   { src: p43,         alt: "Photo",           caption: "Wonder" },
   { src: p44,         alt: "Photo",           caption: "Grace" },
+  { src: p45,         alt: "Photo",           caption: "Serenity" },
   { src: bouddha,     alt: "Bouddha",         caption: "Bouddhanath" },
   { src: chandragiri, alt: "Chandragiri",     caption: "Chandragiri" },
   { src: moon,        alt: "Moon",            caption: "Moonlight" },
