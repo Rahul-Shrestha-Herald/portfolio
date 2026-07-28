@@ -56,7 +56,7 @@ export const WelcomePopup = () => {
           Welcome to my portfolio. Please feel free to know more about me my story, my work, and the moments that shape my journey.
         </p>
         <div className="mt-6 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-          — Samten Dolma Hyolmo
+          Samten Dolma Hyolmo
         </div>
       </div>
     </div>
