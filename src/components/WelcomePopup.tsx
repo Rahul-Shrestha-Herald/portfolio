@@ -53,7 +53,7 @@ export const WelcomePopup = () => {
         <p className="text-xs uppercase tracking-[0.3em] text-olive mb-4">A Note</p>
         <h3 className="font-serif text-3xl text-olive-deep mb-4 italic">Namaste</h3>
         <p className="text-sm leading-relaxed text-foreground/75">
-          Welcome to my portfolio. Please feel free to know more about me — my story, my work, and the moments that shape my journey.
+          Welcome to my portfolio. Please feel free to know more about me my story, my work, and the moments that shape my journey.
         </p>
         <div className="mt-6 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
           — Samten Dolma Hyolmo

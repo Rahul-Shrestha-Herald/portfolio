@@ -160,18 +160,18 @@ export const Photos = () => {
   }, [lightbox]);
 
   return (
-    <section id="photos" className="py-28 md:py-36 bg-cream">
+    <section id="photos" className="py-20 sm:py-28 md:py-36 bg-cream">
       <div className="container">
-        <div className="flex items-end justify-between mb-14 reveal">
-          <h2 className="font-serif text-5xl md:text-6xl text-olive-deep">
+        <div className="flex items-end justify-between mb-10 md:mb-14 reveal">
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-olive-deep">
             Moments, <span className="italic">framed.</span>
           </h2>
           <p className="hidden md:block max-w-xs text-sm text-muted-foreground">
-            A small archive of the days — at work, at home, on quiet wanders.
+            A small archive of the days at work, at home, on quiet wanders.
           </p>
         </div>
 
-        <div className="columns-2 md:columns-3 gap-4 md:gap-6">
+        <div className="columns-2 md:columns-3 gap-3 md:gap-6">
           {INITIAL_INDICES.map((startIdx, slot) => (
             <PhotoSlot
               key={slot}
@@ -183,14 +183,13 @@ export const Photos = () => {
           ))}
         </div>
 
-        {/* See More Button */}
-        <div className="flex justify-center mt-16 reveal">
+        <div className="flex justify-center mt-12 md:mt-16 reveal">
           <button
             onClick={() => navigate("/photos")}
-            className="group relative flex items-center gap-4 px-10 py-4 border border-olive-deep/30 text-olive-deep hover:bg-olive-deep hover:text-cream transition-all duration-500 overflow-hidden"
+            className="group relative flex items-center gap-3 sm:gap-4 px-8 sm:px-10 py-3 sm:py-4 border border-olive-deep/30 text-olive-deep hover:bg-olive-deep hover:text-cream transition-all duration-500 overflow-hidden"
           >
             <span className="absolute inset-0 bg-olive-deep translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
-            <span className="relative text-[11px] uppercase tracking-[0.4em]">View All Photos</span>
+            <span className="relative text-[10px] sm:text-[11px] uppercase tracking-[0.3em] sm:tracking-[0.4em]">View All Photos</span>
             <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>

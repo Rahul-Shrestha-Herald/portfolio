@@ -34,7 +34,7 @@ export const Showcase = () => {
               Bringing care home, <span className="italic">to the mountains.</span>
             </h2>
             <p className="text-foreground/75 leading-relaxed mb-6">
-              In the spring of 2024, I led a volunteer health camp in a remote Hyolmo village — two days of free check-ups, medication, and warm tea for 312 villagers, many of whom had never met a nurse before.
+              In the spring of 2024, I led a volunteer health camp in a remote Hyolmo village two days of free check-ups, medication, and warm tea for 312 villagers, many of whom had never met a nurse before.
             </p>
             <p className="text-foreground/75 leading-relaxed">
               It reminded me why I do this work: medicine is most powerful when it travels to where it is needed the most.

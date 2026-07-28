@@ -45,6 +45,24 @@ import ot          from "@/assets/ot.jpeg";
 import ringu       from "@/assets/ringu.jpeg";
 import rupeshdai   from "@/assets/rupeshdai.jpeg";
 import yug         from "@/assets/yug.jpeg";
+// New photos
+import np1  from "@/assets/1000021016.jpg";
+import np2  from "@/assets/20260616_225101.jpg";
+import np3  from "@/assets/FRQS0682.jpg";
+import np4  from "@/assets/IMG_20260216_204025_279.webp";
+import np5  from "@/assets/IMG_20260621_201818_055.webp";
+import np6  from "@/assets/IMG-39c45f9d86e66ca983b43d6986744eaf-V.jpg";
+import np7  from "@/assets/IMG-b8f35cc03d79040d603402dc7980fd90-V.jpg";
+import np8  from "@/assets/LCOA1675.jpg";
+import np9  from "@/assets/Peachy_20260424_191650917.jpg";
+import np10 from "@/assets/retouch_2026051916105552.jpg";
+import np11 from "@/assets/retouch_2026051916273620b.jpg";
+import np12 from "@/assets/retouch_2026062101104346b.jpg";
+import np13 from "@/assets/Screenshot_20260621_200620_Photos.jpg";
+import np14 from "@/assets/SNOW_20230521_192120_901.jpg";
+import np15 from "@/assets/TAULE4016.jpg";
+import np16 from "@/assets/UCVL6095.jpg";
+import np17 from "@/assets/VID_20260714_050243_358.jpg";
 
 const photos = [
   { src: p2,          alt: "Portrait",        caption: "Samten" },
@@ -88,6 +106,23 @@ const photos = [
   { src: ringu,       alt: "Ringu",           caption: "Ringu" },
   { src: rupeshdai,   alt: "Rupesh dai",      caption: "Rupesh dai" },
   { src: yug,         alt: "Yug",             caption: "Yug" },
+  { src: np1,         alt: "Photo",           caption: "Memory" },
+  { src: np2,         alt: "Photo",           caption: "A day" },
+  { src: np3,         alt: "Photo",           caption: "Moment" },
+  { src: np4,         alt: "Photo",           caption: "Captured" },
+  { src: np5,         alt: "Photo",           caption: "Life" },
+  { src: np6,         alt: "Photo",           caption: "Story" },
+  { src: np7,         alt: "Photo",           caption: "Journey" },
+  { src: np8,         alt: "Photo",           caption: "Together" },
+  { src: np9,         alt: "Photo",           caption: "Peachy" },
+  { src: np10,        alt: "Photo",           caption: "Glow" },
+  { src: np11,        alt: "Photo",           caption: "Radiance" },
+  { src: np12,        alt: "Photo",           caption: "Shine" },
+  { src: np13,        alt: "Photo",           caption: "Snapshot" },
+  { src: np14,        alt: "Photo",           caption: "Snow" },
+  { src: np15,        alt: "Photo",           caption: "Landscape" },
+  { src: np16,        alt: "Photo",           caption: "Scene" },
+  { src: np17,        alt: "Photo",           caption: "Still" },
 ];
 
 const AllPhotos = () => {
@@ -122,7 +157,7 @@ const AllPhotos = () => {
       <div className="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-olive/10">
         <div className="container py-4 flex items-center justify-between">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/", { replace: true })}
             className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-olive-deep/70 hover:text-olive-deep transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -146,7 +181,7 @@ const AllPhotos = () => {
 
       {/* Masonry grid */}
       <div className="container pb-28">
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 md:gap-5">
+        <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-5">
           {photos.map((p, i) => (
             <figure
               key={i}

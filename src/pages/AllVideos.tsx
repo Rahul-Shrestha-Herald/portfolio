@@ -13,6 +13,10 @@ import vid10 from "@/assets/video10.mp4";
 import vid12 from "@/assets/video12.mp4";
 import vid14 from "@/assets/video14.mp4";
 import vid15 from "@/assets/video15.mp4";
+import nv1   from "@/assets/55275ee0e96da8602f306a192b4eec7b.mp4";
+import nv2   from "@/assets/DGUJE5354.mp4";
+import nv3   from "@/assets/IMG_1672.mp4";
+import nv4   from "@/assets/Snapchat-86853788.mp4";
 
 const videos = [
   { src: vid1,  url: null },
@@ -24,6 +28,11 @@ const videos = [
   { src: vid12, url: null },
   { src: vid14, url: null },
   { src: vid15, url: null },
+  { src: nv1,   url: null },
+  { src: nv2,   url: null },
+  { src: nv3,   url: null },
+  { src: nv4,   url: null },
+  { src: null,  url: "https://youtube.com/shorts/KztDvi4rBI4" },
 ];
 
 const AllVideos = () => {
@@ -59,7 +68,7 @@ const AllVideos = () => {
       <div className="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-olive/10">
         <div className="container py-4 flex items-center justify-between">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/", { replace: true })}
             className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-olive-deep/70 hover:text-olive-deep transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -83,7 +92,7 @@ const AllVideos = () => {
 
       {/* Grid */}
       <div className="container pb-28">
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 protected">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {videos.map((v, i) => (
             <button
               key={i}

@@ -6,7 +6,6 @@ import { About } from "@/components/About";
 import { Photos } from "@/components/Photos";
 import { Videos } from "@/components/Videos";
 import { Music } from "@/components/Music";
-import { Showcase } from "@/components/Showcase";
 import { Journal } from "@/components/Journal";
 import { Contact } from "@/components/Contact";
 import { useReveal } from "@/hooks/useReveal";
@@ -24,7 +23,7 @@ const Index = () => {
       document.head.appendChild(m);
       return m;
     })();
-    meta.setAttribute('content', 'Portfolio of Samten Dolma Hyolmo — a nurse and caregiver from the Himalayas. Stories of compassion, care, and quiet devotion.');
+    meta.setAttribute('content', 'Portfolio of Samten Dolma Hyolmo a nurse and caregiver from the Himalayas. Stories of compassion, care, and quiet devotion.');
   }, []);
 
   return (
@@ -36,7 +35,6 @@ const Index = () => {
       <Photos />
       <Videos />
       <Music />
-      <Showcase />
       {/* <Journal /> */}
       <Contact />
     </main>
