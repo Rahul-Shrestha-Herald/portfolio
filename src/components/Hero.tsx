@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import hero1 from "@/assets/photo37.jpg";
 import hero2 from "@/assets/ot.jpeg";
+import heroMobile from "@/assets/hero-mobile-view.jpeg";
 import { useParallax } from "@/hooks/useParallax";
 
 const heroPhotos = [hero1, hero2];
@@ -25,10 +26,18 @@ export const Hero = () => {
   return (
     <section id="top" className="relative min-h-screen w-full overflow-hidden bg-cream">
       <div ref={imgRef} className="absolute inset-0 scale-110">
+        {/* Mobile: fixed hero-mobile-view photo */}
+        <img
+          src={heroMobile}
+          alt="Portrait of Samten Dolma Hyolmo, nurse"
+          className="absolute inset-0 w-full h-full object-cover object-top sm:hidden"
+          draggable={false}
+        />
+        {/* Tablet & up: cycling photos */}
         <img
           src={heroPhotos[current]}
           alt="Portrait of Samten Dolma Hyolmo, nurse"
-          className={`absolute inset-0 w-full h-full object-cover object-top sm:object-center transition-opacity duration-700 ${fading ? "opacity-0" : "opacity-100"}`}
+          className={`absolute inset-0 w-full h-full object-cover object-center hidden sm:block transition-opacity duration-700 ${fading ? "opacity-0" : "opacity-100"}`}
           draggable={false}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-olive-deep/80 via-olive-deep/20 to-cream/30" />
@@ -60,6 +69,12 @@ export const Hero = () => {
       {/* Bottom strip */}
       <div className="absolute bottom-0 inset-x-0 z-10">
         <div className="container pb-8 md:pb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 text-cream">
+          <p
+            className="font-serif text-cream/90 text-[11vw] sm:text-[12vw] md:text-[9vw] lg:text-[8vw] xl:text-[7vw] leading-[0.9] tracking-tight animate-fade-up drop-shadow-[0_4px_30px_rgba(0,0,0,0.35)]"
+            style={{ animationDelay: "0.4s" }}
+          >
+            Laugh like Luffy.
+          </p>
           <p
             className="font-serif italic text-base sm:text-lg md:text-xl max-w-xs sm:max-w-sm leading-snug animate-fade-up"
             style={{ animationDelay: "0.5s" }}

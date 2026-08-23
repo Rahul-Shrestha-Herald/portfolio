@@ -11,11 +11,11 @@ export const About = () => {
 
           <div className="md:col-span-7 md:col-start-6 reveal">
             <p className="font-serif text-xl sm:text-2xl md:text-3xl leading-snug text-olive-deep/90 mb-6 md:mb-8 text-balance">
-              I am Samten Dolma Hyolmo a nurse who believes healing begins with presence, patience, and a quiet kind of love.
+              I am Samten Dolma Hyolmo — a nurse who believes healing begins with presence, patience, and a quiet kind of love.
             </p>
             <div className="space-y-5 text-foreground/75 leading-relaxed max-w-xl text-sm sm:text-base">
               <p>
-                When I'm not working, you'll find me in a quiet corner of my room or a cozy café, rewatching my comfort shows like Friends or The Big Bang Theory, or getting lost in the science of the movie "Interstellar" or simply diving into a good book.
+                When I'm not working, you'll find me in a quiet corner of my room or a cozy café, rewatching my comfort shows like Friends or The Big Bang Theory, or getting lost in the science of the movie "Interstellar" — or simply diving into a good book.
               </p>
             </div>
           </div>

@@ -62,7 +62,6 @@ import np13 from "@/assets/Screenshot_20260621_200620_Photos.jpg";
 import np14 from "@/assets/SNOW_20230521_192120_901.jpg";
 import np15 from "@/assets/TAULE4016.jpg";
 import np16 from "@/assets/UCVL6095.jpg";
-import np17 from "@/assets/VID_20260714_050243_358.jpg";
 
 const photos = [
   { src: p2,          alt: "Portrait",        caption: "Samten" },
@@ -122,7 +121,6 @@ const photos = [
   { src: np14,        alt: "Photo",           caption: "Snow" },
   { src: np15,        alt: "Photo",           caption: "Landscape" },
   { src: np16,        alt: "Photo",           caption: "Scene" },
-  { src: np17,        alt: "Photo",           caption: "Still" },
 ];
 
 const AllPhotos = () => {

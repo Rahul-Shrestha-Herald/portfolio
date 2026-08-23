@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { X, ArrowRight } from "lucide-react";
+import { X, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 import g1  from "@/assets/photo3.jpeg";
 import g2  from "@/assets/photo5.jpeg";
@@ -44,106 +44,145 @@ export const allPhotos = [
   { src: g16, alt: "Photo",                         caption: "Light" },
   { src: g17, alt: "Photo",                         caption: "Warmth" },
   { src: g18, alt: "Rupesh dai",                    caption: "Rupesh dai" },
-  { src: g19, alt: "Swimming",                      caption: "Swimming" },
+  { src: g19, alt: "Photo",                         caption: "Swimming" },
   { src: g20, alt: "Yug",                           caption: "Yug" },
   { src: g21, alt: "Moon",                          caption: "Moonlight" },
   { src: g22, alt: "OT",                            caption: "Operating theatre" },
 ];
 
-// Each slot has its own interval (ms) so they never sync up
 const SLOT_INTERVALS = [5000, 7000, 6000, 8000, 5500, 9000];
-
-// Each slot starts at a different photo so there's no duplication initially
 const INITIAL_INDICES = [0, 1, 2, 3, 4, 5];
 
+// ── Desktop: rotating slot ──────────────────────────────────────────────────
 const PhotoSlot = ({
-  slot,
-  startIndex,
-  interval,
-  onOpen,
+  slot, startIndex, interval, onOpen,
 }: {
-  slot: number;
-  startIndex: number;
-  interval: number;
+  slot: number; startIndex: number; interval: number;
   onOpen: (src: string, alt: string, caption: string) => void;
 }) => {
   const [photoIdx, setPhotoIdx] = useState(startIndex);
-  const [nextIdx, setNextIdx] = useState<number | null>(null);
+  const [nextIdx, setNextIdx]   = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const lockedHeight = useRef<number | null>(null);
 
   const lockHeight = () => {
     if (lockedHeight.current === null && containerRef.current) {
       const h = containerRef.current.offsetHeight;
-      if (h > 0) {
-        lockedHeight.current = h;
-        containerRef.current.style.height = `${h}px`;
-      }
+      if (h > 0) { lockedHeight.current = h; containerRef.current.style.height = `${h}px`; }
     }
   };
 
   useEffect(() => {
     let next = (startIndex + 6) % allPhotos.length;
     const timer = setInterval(() => {
-      lockHeight(); // ensure locked before swap
-      const img = new Image();
-      img.src = allPhotos[next].src;
+      lockHeight();
+      const img = new Image(); img.src = allPhotos[next].src;
       setNextIdx(next);
-      setTimeout(() => {
-        setPhotoIdx(next);
-        setNextIdx(null);
-        next = (next + 6) % allPhotos.length;
-      }, 700);
+      setTimeout(() => { setPhotoIdx(next); setNextIdx(null); next = (next + 6) % allPhotos.length; }, 700);
     }, interval);
     return () => clearInterval(timer);
   }, [startIndex, interval]);
 
-  const p = allPhotos[photoIdx];
+  const p     = allPhotos[photoIdx];
   const pNext = nextIdx !== null ? allPhotos[nextIdx] : null;
 
   return (
     <figure
-      className="relative mb-4 md:mb-6 break-inside-avoid overflow-hidden group reveal cursor-zoom-in tilt"
-      style={{ transitionDelay: `${slot * 80}ms` }}
+      className="relative mb-6 break-inside-avoid overflow-hidden group cursor-zoom-in tilt"
       onClick={() => onOpen(p.src, p.alt, p.caption)}
     >
-      {/* Invisible spacer img — sets natural height, never changes, never shown */}
-      <img
-        src={p.src}
-        alt=""
-        aria-hidden
-        draggable={false}
-        onLoad={lockHeight}
-        className="w-full h-auto block invisible"
-      />
-      {/* Actual container locked to spacer height */}
+      <img src={p.src} alt="" aria-hidden draggable={false} onLoad={lockHeight}
+        className="w-full h-auto block invisible" />
       <div ref={containerRef} className="absolute inset-0">
-        {/* Current photo */}
-        <img
-          src={p.src}
-          alt={p.alt}
-          draggable={false}
+        <img src={p.src} alt={p.alt} draggable={false}
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.06]"
-          style={{
-            transition: "opacity 0.7s ease, transform 0.7s ease",
-            opacity: pNext ? 0 : 1,
-          }}
-        />
-        {/* Next photo crossfades in */}
+          style={{ transition: "opacity 0.7s ease, transform 0.7s ease", opacity: pNext ? 0 : 1 }} />
         {pNext && (
-          <img
-            src={pNext.src}
-            alt={pNext.alt}
-            draggable={false}
+          <img src={pNext.src} alt={pNext.alt} draggable={false}
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ animation: "fadeIn 0.7s ease forwards" }}
-          />
+            style={{ animation: "fadeIn 0.7s ease forwards" }} />
         )}
       </div>
     </figure>
   );
 };
 
+// ── Mobile: 3-photo swipe carousel ─────────────────────────────────────────
+const MOBILE_PHOTOS = [allPhotos[0], allPhotos[1], allPhotos[2]];
+
+const MobileCarousel = ({
+  onOpen,
+}: {
+  onOpen: (src: string, alt: string, caption: string) => void;
+}) => {
+  const [idx, setIdx] = useState(0);
+  const [fading, setFading] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const total = MOBILE_PHOTOS.length;
+
+  const go = (dir: number) => {
+    setFading(true);
+    setTimeout(() => {
+      setIdx(i => (i + dir + total) % total);
+      setFading(false);
+    }, 250);
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd   = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) go(diff > 0 ? 1 : -1);
+    touchStartX.current = null;
+  };
+
+  const p = MOBILE_PHOTOS[idx];
+
+  return (
+    <div className="relative select-none" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      {/* Photo */}
+      <div
+        className="w-full aspect-[3/4] overflow-hidden cursor-zoom-in"
+        onClick={() => onOpen(p.src, p.alt, p.caption)}
+      >
+        <img
+          src={p.src} alt={p.alt} draggable={false}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${fading ? "opacity-0" : "opacity-100"}`}
+        />
+      </div>
+
+      {/* Arrows */}
+      <button
+        onClick={() => go(-1)}
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-cream/80 backdrop-blur-sm flex items-center justify-center text-olive-deep shadow-sm"
+        aria-label="Previous"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+      <button
+        onClick={() => go(1)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-cream/80 backdrop-blur-sm flex items-center justify-center text-olive-deep shadow-sm"
+        aria-label="Next"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-4">
+        {MOBILE_PHOTOS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? "bg-olive-deep w-6" : "bg-olive/30 w-1.5"}`}
+            aria-label={`Go to photo ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ── Main section ────────────────────────────────────────────────────────────
 export const Photos = () => {
   const navigate = useNavigate();
   const [lightbox, setLightbox] = useState<{ src: string; alt: string; caption: string } | null>(null);
@@ -153,11 +192,10 @@ export const Photos = () => {
     document.body.classList.add("no-scroll");
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(null); };
     document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.classList.remove("no-scroll");
-      document.removeEventListener("keydown", onKey);
-    };
+    return () => { document.body.classList.remove("no-scroll"); document.removeEventListener("keydown", onKey); };
   }, [lightbox]);
+
+  const openLightbox = (src: string, alt: string, caption: string) => setLightbox({ src, alt, caption });
 
   return (
     <section id="photos" className="py-20 sm:py-28 md:py-36 bg-cream">
@@ -167,29 +205,38 @@ export const Photos = () => {
             Moments, <span className="italic">framed.</span>
           </h2>
           <p className="hidden md:block max-w-xs text-sm text-muted-foreground">
-            A small archive of the days at work, at home, on quiet wanders.
+            A small archive of the days — at work, at home, on quiet wanders.
           </p>
         </div>
 
-        <div className="columns-2 md:columns-3 gap-3 md:gap-6">
-          {INITIAL_INDICES.map((startIdx, slot) => (
-            <PhotoSlot
-              key={slot}
-              slot={slot}
-              startIndex={startIdx}
-              interval={SLOT_INTERVALS[slot]}
-              onOpen={(src, alt, caption) => setLightbox({ src, alt, caption })}
-            />
-          ))}
+        {/* Mobile: 3-photo swipe carousel */}
+        <div className="md:hidden">
+          <MobileCarousel onOpen={openLightbox} />
         </div>
 
-        <div className="flex justify-center mt-12 md:mt-16 reveal">
+        {/* Laptop+: rotating masonry grid */}
+        <div className="hidden md:block">
+          <div className="columns-3 gap-6">
+            {INITIAL_INDICES.map((startIdx, slot) => (
+              <PhotoSlot
+                key={slot}
+                slot={slot}
+                startIndex={startIdx}
+                interval={SLOT_INTERVALS[slot]}
+                onOpen={openLightbox}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* View All button */}
+        <div className="flex justify-center mt-10 md:mt-16 reveal">
           <button
             onClick={() => navigate("/photos")}
-            className="group relative flex items-center gap-3 sm:gap-4 px-8 sm:px-10 py-3 sm:py-4 border border-olive-deep/30 text-olive-deep hover:bg-olive-deep hover:text-cream transition-all duration-500 overflow-hidden"
+            className="group relative flex items-center gap-3 px-8 sm:px-10 py-3 sm:py-4 border border-olive-deep/30 text-olive-deep hover:bg-olive-deep hover:text-cream transition-all duration-500 overflow-hidden"
           >
             <span className="absolute inset-0 bg-olive-deep translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
-            <span className="relative text-[10px] sm:text-[11px] uppercase tracking-[0.3em] sm:tracking-[0.4em]">View All Photos</span>
+            <span className="relative text-[10px] sm:text-[11px] uppercase tracking-[0.3em]">View All Photos</span>
             <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>

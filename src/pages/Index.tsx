@@ -3,10 +3,10 @@ import { WelcomePopup } from "@/components/WelcomePopup";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { GamesBanner } from "@/components/GamesBanner";
 import { Photos } from "@/components/Photos";
 import { Videos } from "@/components/Videos";
 import { Music } from "@/components/Music";
-import { Journal } from "@/components/Journal";
 import { Contact } from "@/components/Contact";
 import { useReveal } from "@/hooks/useReveal";
 import { useMediaProtection } from "@/hooks/useMediaProtection";
@@ -32,10 +32,11 @@ const Index = () => {
       <Nav />
       <Hero />
       <About />
+      <GamesBanner />
       <Photos />
       <Videos />
       <Music />
-      {/* <Journal /> */}
+      {/* Journal hidden */}
       <Contact />
     </main>
   );

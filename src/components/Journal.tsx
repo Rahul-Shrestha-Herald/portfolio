@@ -1,28 +1,12 @@
-import b1 from "@/assets/photo12.jpg";
 import b2 from "@/assets/photo13.png";
-import b3 from "@/assets/laptop.jpeg";
 
 const posts = [
-  {
-    img: b1,
-    cat: "Reflection",
-    title: "Notes from the night shift",
-    excerpt: "On the strange, sacred quiet of a hospital after midnight.",
-    date: "Apr 12, 2025",
-  },
   {
     img: b2,
     cat: "Health Tips",
     title: "Five small habits for stronger immunity",
     excerpt: "Lemon, ginger, sleep, sunlight, breath. Begin where you are.",
     date: "Mar 28, 2025",
-  },
-  {
-    img: b3,
-    cat: "Wellbeing",
-    title: "How I keep my own cup full",
-    excerpt: "Caregivers must care for themselves first. Here is my ritual.",
-    date: "Mar 04, 2025",
   },
 ];
 
